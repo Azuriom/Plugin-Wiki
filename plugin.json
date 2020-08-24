@@ -1,0 +1,15 @@
+{
+    "id": "wiki",
+    "name": "Wiki",
+    "description": "A wiki for your website.",
+    "version": "1.0.0",
+    "url": "https://azuriom.com/market/resources/28",
+    "authors": [
+        "Azuriom"
+    ],
+    "providers": [
+        "\\Azuriom\\Plugin\\Wiki\\Providers\\WikiServiceProvider",
+        "\\Azuriom\\Plugin\\Wiki\\Providers\\RouteServiceProvider"
+    ],
+    "apiId": 28
+}

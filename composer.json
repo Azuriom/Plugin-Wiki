@@ -1,0 +1,10 @@
+{
+    "name": "azuriom/wiki",
+    "type": "azuriom-plugin",
+    "description": "Plugin for Azuriom",
+    "autoload": {
+        "psr-4": {
+            "Azuriom\\Plugin\\Wiki\\": "src/"
+        }
+    }
+}
