@@ -27,8 +27,6 @@ class WikiController extends Controller
      */
     public function show(Category $category)
     {
-        abort_if($category->pages->isEmpty(), 404);
-
         return view('wiki::categories.show', ['category' => $category]);
     }
 }

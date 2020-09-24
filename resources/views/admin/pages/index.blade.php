@@ -9,7 +9,7 @@
             const sortable = Sortable.create(document.getElementById('categories'), {
                 animation: 150,
                 group: 'categories',
-                handle: '.sortable-handle'
+                handle: '.sortable-handle',
             });
 
             document.querySelectorAll('.wiki-list').forEach(function (el) {
@@ -18,18 +18,23 @@
                         name: 'pages',
                     },
                     animation: 150,
-                    handle: '.sortable-handle'
+                    handle: '.sortable-handle',
                 });
             });
 
-            function serialize(sortable) {
-                const serialized = [];
+            function serialize(categories) {
+                return [].slice.call(categories).map(function (category) {
+                    const pages = category.querySelector('.wiki-list');
 
-                [].slice.call(sortable.children).forEach(function (child) {
-                    serialized.push(child.dataset['id']);
+                    const pagesId = [].slice.call(pages.children).map(function (categoryPackage) {
+                        return categoryPackage.dataset['id'];
+                    });
+
+                    return {
+                        id: category.dataset['categoryId'],
+                        pages: pagesId,
+                    };
                 });
-
-                return serialized
             }
 
             const saveButton = document.getElementById('save');
@@ -40,7 +45,7 @@
                 saveButtonIcon.classList.remove('d-none');
 
                 axios.post('{{ route('wiki.admin.pages.update-order') }}', {
-                    'pages': serialize(sortable.el).reverse()
+                    'categories': serialize(sortable.el.children),
                 }).then(function (json) {
                     createAlert('success', json.data.message, true);
                 }).catch(function (error) {

@@ -33,15 +33,29 @@ class PageController extends Controller
     public function updateOrder(Request $request)
     {
         $this->validate($request, [
-            'pages' => ['required', 'array'],
+            'categories' => ['required', 'array'],
         ]);
 
-        $pages = $request->input('pages');
+        $categories = $request->input('categories');
 
-        $position = 1;
+        $categoryPosition = 1;
 
-        foreach ($pages as $pageId) {
-            Page::whereKey($pageId)->update(['position' => $position++]);
+        foreach ($categories as $category) {
+            $id = $category['id'];
+            $pages = $category['pages'] ?? [];
+
+            Category::whereKey($id)->update([
+                'position' => $categoryPosition++,
+            ]);
+
+            $pagePosition = 1;
+
+            foreach ($pages as $page) {
+                Page::whereKey($page)->update([
+                    'position' => $pagePosition++,
+                    'category_id' => $id,
+                ]);
+            }
         }
 
         return response()->json([
@@ -70,7 +84,7 @@ class PageController extends Controller
         Page::create($request->validated());
 
         return redirect()->route('wiki.admin.pages.index')
-            ->with('success', trans('wiki::admin.pages.status.created'));
+            ->with('success', trans('admin.pages.status.created'));
     }
 
     /**
@@ -99,7 +113,7 @@ class PageController extends Controller
         $page->update($request->validated());
 
         return redirect()->route('wiki.admin.pages.index')
-            ->with('success', trans('wiki::admin.pages.status.updated'));
+            ->with('success', trans('admin.pages.status.updated'));
     }
 
     /**
@@ -115,6 +129,6 @@ class PageController extends Controller
         $page->delete();
 
         return redirect()->route('wiki.admin.pages.index')
-            ->with('success', trans('wiki::admin.pages.status.deleted'));
+            ->with('success', trans('admin.pages.status.deleted'));
     }
 }
