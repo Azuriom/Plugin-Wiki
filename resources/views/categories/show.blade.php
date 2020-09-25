@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Plugin home')
+@section('title', $category->name)
 
 @section('content')
     <div class="container content">
