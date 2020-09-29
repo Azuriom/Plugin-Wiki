@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Plugin home')
+@section('title', trans('wiki::messages.title'))
 
 @section('content')
     <div class="container content">
