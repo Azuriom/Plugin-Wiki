@@ -24,4 +24,6 @@ return [
     'pages' => [
         'order-updated' => 'Ordre des pages mis à jour.',
     ],
+
+    'permission' => 'Gérer le wiki',
 ];

@@ -3,6 +3,7 @@
 namespace Azuriom\Plugin\Wiki\Providers;
 
 use Azuriom\Extensions\Plugin\BasePluginServiceProvider;
+use Azuriom\Models\Permission;
 
 class WikiServiceProvider extends BasePluginServiceProvider
 {
@@ -34,6 +35,10 @@ class WikiServiceProvider extends BasePluginServiceProvider
         $this->registerAdminNavigation();
 
         $this->registerUserNavigation();
+
+        Permission::registerPermissions([
+            'wiki.admin' => 'wiki::admin.permission',
+        ]);
     }
 
     /**
@@ -60,7 +65,7 @@ class WikiServiceProvider extends BasePluginServiceProvider
                 'name' => 'wiki::admin.title',
                 'icon' => 'fas fa-book',
                 'route' => 'wiki.admin.pages.index',
-                'permission' => 'wiki.pages',
+                'permission' => 'wiki.admin',
             ],
         ];
     }

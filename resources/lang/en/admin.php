@@ -24,4 +24,6 @@ return [
     'pages' => [
         'order-updated' => 'Pages order updated.',
     ],
+
+    'permission' => 'Manage wiki',
 ];
