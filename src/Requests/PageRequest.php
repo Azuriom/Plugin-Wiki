@@ -17,6 +17,7 @@ class PageRequest extends FormRequest
             'translations.*.title' => ['required', 'string', 'max:100'],
             'category_id' => ['required', 'exists:wiki_categories,id'],
             'translations.*.content' => ['required', 'string'],
+            'translations.*.locale' => ['required', 'string', 'max:50'],
         ];
     }
 }

@@ -21,6 +21,7 @@ class CategoryRequest extends FormRequest
         return [
             'icon' => ['nullable', 'string', 'max:50'],
             'translations.*.name' => ['required', 'string', 'max:50'],
+            'translations.*.locale' => ['required', 'string', 'max:50'],
             'slug' => ['required', 'string', 'max:100', new Slug(), $slugRule],
         ];
     }
