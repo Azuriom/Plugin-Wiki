@@ -3,6 +3,7 @@
 namespace Azuriom\Plugin\Wiki\Models;
 
 use Azuriom\Models\Traits\HasTablePrefix;
+use Azuriom\Models\Traits\HasTranslations;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -18,6 +19,7 @@ use Illuminate\Database\Eloquent\Model;
 class Page extends Model
 {
     use HasTablePrefix;
+    use HasTranslations;
 
     /**
      * The table prefix associated with the model.
@@ -34,6 +36,13 @@ class Page extends Model
     protected $fillable = [
         'title', 'content', 'category_id',
     ];
+
+    /**
+     * The attributes that are translatable.
+     *
+     * @var array
+     */
+    protected $translatable = ['title', 'content'];
 
     /**
      * Get the category of this page.

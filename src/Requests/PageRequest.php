@@ -14,9 +14,9 @@ class PageRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => ['required', 'string', 'max:100'],
+            'translations.*.title' => ['required', 'string', 'max:100'],
             'category_id' => ['required', 'exists:wiki_categories,id'],
-            'content' => ['required', 'string'],
+            'translations.*.content' => ['required', 'string'],
         ];
     }
 }

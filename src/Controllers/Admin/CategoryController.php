@@ -5,6 +5,7 @@ namespace Azuriom\Plugin\Wiki\Controllers\Admin;
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Plugin\Wiki\Models\Category;
 use Azuriom\Plugin\Wiki\Requests\CategoryRequest;
+use Illuminate\Support\Arr;
 
 class CategoryController extends Controller
 {
@@ -26,7 +27,12 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request)
     {
-        Category::create($request->validated());
+        $data = $request->validated();
+        $category = new Category(Arr::except($data, 'translations'));
+
+        set_spatie_translations($category, $data['translations']);
+
+        $category->save();
 
         return redirect()->route('wiki.admin.pages.index')
             ->with('success', trans('wiki::admin.categories.status.created'));
@@ -52,7 +58,10 @@ class CategoryController extends Controller
      */
     public function update(CategoryRequest $request, Category $category)
     {
-        $category->update($request->validated());
+        $data = $request->validated();
+        set_spatie_translations($category, $data['translations']);
+
+        $category->update(Arr::except($data, 'translations'));
 
         return redirect()->route('wiki.admin.pages.index')
             ->with('success', trans('wiki::admin.categories.status.updated'));
