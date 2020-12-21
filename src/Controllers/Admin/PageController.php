@@ -7,6 +7,7 @@ use Azuriom\Plugin\Wiki\Models\Category;
 use Azuriom\Plugin\Wiki\Models\Page;
 use Azuriom\Plugin\Wiki\Requests\PageRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class PageController extends Controller
 {
@@ -70,7 +71,10 @@ class PageController extends Controller
      */
     public function create()
     {
-        return view('wiki::admin.pages.create', ['categories' => Category::all()]);
+        return view('wiki::admin.pages.create', [
+            'categories' => Category::all(),
+            'pendingId' => old('pending_id', Str::uuid()),
+        ]);
     }
 
     /**
@@ -81,7 +85,9 @@ class PageController extends Controller
      */
     public function store(PageRequest $request)
     {
-        Page::create($request->validated());
+        $page = Page::create($request->validated());
+
+        $page->persistPendingAttachments($request->input('pending_id'));
 
         return redirect()->route('wiki.admin.pages.index')
             ->with('success', trans('admin.pages.status.created'));

@@ -6,6 +6,9 @@
     <div class="card shadow mb-4">
         <div class="card-body">
             <form action="{{ route('wiki.admin.pages.store') }}" method="POST">
+                <input type="hidden" name="pending_id" value="{{ $pendingId }}">
+
+                @include('admin.elements.editor', ['imagesUploadUrl' => route('wiki.admin.pages.attachments.pending', $pendingId)])
 
                 @include('wiki::admin.pages._form')
 

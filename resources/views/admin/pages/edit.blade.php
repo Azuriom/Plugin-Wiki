@@ -10,6 +10,8 @@
 
                 @include('wiki::admin.pages._form')
 
+                @include('admin.elements.editor', ['imagesUploadUrl' => route('wiki.admin.pages.attachments.store', $page)])
+
                 <button type="submit" class="btn btn-primary">
                     <i class="fas fa-save"></i> {{ trans('messages.actions.save') }}
                 </button>
