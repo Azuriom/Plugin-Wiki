@@ -7,6 +7,7 @@ use Azuriom\Plugin\Wiki\Models\Category;
 use Azuriom\Plugin\Wiki\Models\Page;
 use Azuriom\Plugin\Wiki\Requests\PageRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
 class PageController extends Controller
@@ -85,7 +86,12 @@ class PageController extends Controller
      */
     public function store(PageRequest $request)
     {
-        $page = Page::create($request->validated());
+        $data = $request->validated();
+        $page = new Page(Arr::except($data, 'translations'));
+
+        set_spatie_translations($page, $data['translations']);
+
+        $page->save();
 
         $page->persistPendingAttachments($request->input('pending_id'));
 
@@ -116,7 +122,10 @@ class PageController extends Controller
      */
     public function update(PageRequest $request, Page $page)
     {
-        $page->update($request->validated());
+        $data = $request->validated();
+        set_spatie_translations($page, $data['translations']);
+
+        $page->update(Arr::except($data, 'translations'));
 
         return redirect()->route('wiki.admin.pages.index')
             ->with('success', trans('admin.pages.status.updated'));
