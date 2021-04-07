@@ -4,6 +4,8 @@ namespace Azuriom\Plugin\Wiki\Providers;
 
 use Azuriom\Extensions\Plugin\BasePluginServiceProvider;
 use Azuriom\Models\Permission;
+use Azuriom\Plugin\Wiki\Models\Page;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 class WikiServiceProvider extends BasePluginServiceProvider
 {
@@ -39,6 +41,8 @@ class WikiServiceProvider extends BasePluginServiceProvider
         Permission::registerPermissions([
             'wiki.admin' => 'wiki::admin.permission',
         ]);
+
+        Relation::morphMap(['wiki.pages' => Page::class]);
     }
 
     /**

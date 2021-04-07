@@ -2,6 +2,7 @@
 
 namespace Azuriom\Plugin\Wiki\Models;
 
+use Azuriom\Models\Traits\Attachable;
 use Azuriom\Models\Traits\HasTablePrefix;
 use Azuriom\Models\Traits\HasTranslations;
 use Illuminate\Database\Eloquent\Model;
@@ -18,6 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Page extends Model
 {
+    use Attachable;
     use HasTablePrefix;
     use HasTranslations;
 

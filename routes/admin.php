@@ -18,4 +18,7 @@ Route::middleware('can:wiki.admin')->group(function () {
     Route::post('pages/position', 'PageController@updateOrder')->name('pages.update-order');
     Route::resource('pages', 'PageController')->except('show');
     Route::resource('categories', 'CategoryController')->except(['index', 'show']);
+
+    Route::resource('pages.attachments', 'PageAttachmentController')->only('store');
+    Route::post('pages/attachments/{pendingId}', 'PageAttachmentController@pending')->name('pages.attachments.pending');
 });
