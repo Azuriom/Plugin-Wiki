@@ -19,7 +19,7 @@ class PageController extends Controller
     public function index()
     {
         return view('wiki::admin.pages.index', [
-            'categories' => Category::with('pages')->get(),
+            'categories' => Category::with('pages')->orderBy('position')->get(),
         ]);
     }
 

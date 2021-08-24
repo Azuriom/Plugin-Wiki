@@ -2,62 +2,60 @@
 
 @section('title', trans('admin.pages.title'))
 
-@if(Auth::user()->isAdmin())
-    @push('footer-scripts')
-        <script src="{{ asset('vendor/sortablejs/Sortable.min.js') }}"></script>
-        <script>
-            const sortable = Sortable.create(document.getElementById('categories'), {
+@push('footer-scripts')
+    <script src="{{ asset('vendor/sortablejs/Sortable.min.js') }}"></script>
+    <script>
+        const sortable = Sortable.create(document.getElementById('categories'), {
+            animation: 150,
+            group: 'categories',
+            handle: '.sortable-handle',
+        });
+
+        document.querySelectorAll('.wiki-list').forEach(function (el) {
+            Sortable.create(el, {
+                group: {
+                    name: 'pages',
+                },
                 animation: 150,
-                group: 'categories',
                 handle: '.sortable-handle',
             });
+        });
 
-            document.querySelectorAll('.wiki-list').forEach(function (el) {
-                Sortable.create(el, {
-                    group: {
-                        name: 'pages',
-                    },
-                    animation: 150,
-                    handle: '.sortable-handle',
+        function serialize(categories) {
+            return [].slice.call(categories).map(function (category) {
+                const pages = category.querySelector('.wiki-list');
+
+                const pagesId = [].slice.call(pages.children).map(function (categoryPackage) {
+                    return categoryPackage.dataset['id'];
                 });
+
+                return {
+                    id: category.dataset['categoryId'],
+                    pages: pagesId,
+                };
             });
+        }
 
-            function serialize(categories) {
-                return [].slice.call(categories).map(function (category) {
-                    const pages = category.querySelector('.wiki-list');
+        const saveButton = document.getElementById('save');
+        const saveButtonIcon = saveButton.querySelector('.btn-spinner');
 
-                    const pagesId = [].slice.call(pages.children).map(function (categoryPackage) {
-                        return categoryPackage.dataset['id'];
-                    });
+        saveButton.addEventListener('click', function () {
+            saveButton.setAttribute('disabled', '');
+            saveButtonIcon.classList.remove('d-none');
 
-                    return {
-                        id: category.dataset['categoryId'],
-                        pages: pagesId,
-                    };
-                });
-            }
-
-            const saveButton = document.getElementById('save');
-            const saveButtonIcon = saveButton.querySelector('.btn-spinner');
-
-            saveButton.addEventListener('click', function () {
-                saveButton.setAttribute('disabled', '');
-                saveButtonIcon.classList.remove('d-none');
-
-                axios.post('{{ route('wiki.admin.pages.update-order') }}', {
-                    'categories': serialize(sortable.el.children),
-                }).then(function (json) {
-                    createAlert('success', json.data.message, true);
-                }).catch(function (error) {
-                    createAlert('danger', error.response.data.message ? error.response.data.message : error, true)
-                }).finally(function () {
-                    saveButton.removeAttribute('disabled');
-                    saveButtonIcon.classList.add('d-none');
-                });
+            axios.post('{{ route('wiki.admin.pages.update-order') }}', {
+                'categories': serialize(sortable.el.children),
+            }).then(function (json) {
+                createAlert('success', json.data.message, true);
+            }).catch(function (error) {
+                createAlert('danger', error.response.data.message ? error.response.data.message : error, true)
+            }).finally(function () {
+                saveButton.removeAttribute('disabled');
+                saveButtonIcon.classList.add('d-none');
             });
-        </script>
-    @endpush
-@endif
+        });
+    </script>
+@endpush
 
 @section('content')
     <div class="card shadow mb-4">
