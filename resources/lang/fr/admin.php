@@ -9,6 +9,7 @@ return [
         'title-create' => 'Créer une catégorie',
 
         'create' => 'Ajouter une catégorie',
+        'enable' => 'Activer cette category',
 
         'empty' => 'Aucune catégorie n\'a été créée actuellement.',
 

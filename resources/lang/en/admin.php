@@ -9,6 +9,7 @@ return [
         'title-create' => 'Create category',
 
         'create' => 'Add category',
+        'enable' => 'Enable this category',
 
         'empty' => 'No category has been created currently.',
 

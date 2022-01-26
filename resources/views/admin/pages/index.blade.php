@@ -74,7 +74,10 @@
                         <div class="card">
                             <div class="card-body d-flex justify-content-between">
                                 <span>
-                                    <i class="fas fa-arrows-alt sortable-handle"></i> {{ $category->name }}
+                                    <i class="fas fa-arrows-alt sortable-handle"></i>
+                                    <a href="{{ route('wiki.show', $category) }}" target="_blank">
+                                        {{ $category->name }}
+                                    </a>
                                 </span>
                                 <span>
                                     <a href="{{ route('wiki.admin.categories.edit', $category) }}" class="mx-1" title="{{ trans('messages.actions.edit') }}" data-toggle="tooltip"><i class="fas fa-edit"></i></a>

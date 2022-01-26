@@ -42,3 +42,8 @@
         @enderror
     </div>
 </div>
+
+<div class="form-group custom-control custom-switch">
+    <input type="checkbox" class="custom-control-input" id="enableSwitch" name="is_enabled" @if($category->is_enabled ?? true) checked @endif>
+    <label class="custom-control-label" for="enableSwitch">{{ trans('wiki::admin.categories.enable') }}</label>
+</div>
