@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', trans('wiki::admin.categories.title-edit', ['category' => $category->id]))
+@section('title', trans('wiki::admin.categories.edit', ['category' => $category->id]))
 
 @section('content')
     <div class="card shadow mb-4">

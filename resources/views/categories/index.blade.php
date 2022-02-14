@@ -10,8 +10,8 @@
             @foreach($categories as $category)
                 <div class="col-md-3">
                     <a href="{{ route('wiki.show', $category) }}">
-                        <div class="card text-center">
-                            <div class="card-body">
+                        <div class="card">
+                            <div class="card-body text-center">
                                 <i class="{{ $category->icon ?? 'fas fa-book' }} fa-fw fa-3x mb-3"></i>
 
                                 <h2>{{ $category->name }}</h2>

@@ -1,5 +1,8 @@
 <?php
 
+use Azuriom\Plugin\Wiki\Controllers\Admin\CategoryController;
+use Azuriom\Plugin\Wiki\Controllers\Admin\PageAttachmentController;
+use Azuriom\Plugin\Wiki\Controllers\Admin\PageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,10 +18,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('can:wiki.admin')->group(function () {
-    Route::post('pages/position', 'PageController@updateOrder')->name('pages.update-order');
-    Route::resource('pages', 'PageController')->except('show');
-    Route::resource('categories', 'CategoryController')->except(['index', 'show']);
+    Route::post('pages/position', [PageController::class, 'updateOrder'])->name('pages.update-order');
+    Route::resource('pages', PageController::class)->except('show');
+    Route::resource('categories', CategoryController::class)->except(['index', 'show']);
 
-    Route::resource('pages.attachments', 'PageAttachmentController')->only('store');
-    Route::post('pages/attachments/{pendingId}', 'PageAttachmentController@pending')->name('pages.attachments.pending');
+    Route::resource('pages.attachments', PageAttachmentController::class)->only('store');
+    Route::post('pages/attachments/{pendingId}', [PageAttachmentController::class, 'pending'])->name('pages.attachments.pending');
 });

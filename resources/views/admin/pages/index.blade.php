@@ -116,7 +116,7 @@
             </button>
 
             <a href="{{ route('wiki.admin.categories.create') }}" class="btn btn-primary">
-                <i class="fas fa-plus"></i> {{ trans('wiki::admin.categories.create') }}
+                <i class="fas fa-plus"></i> {{ trans('wiki::admin.categories.add') }}
             </a>
 
             @if(! $categories->isEmpty())

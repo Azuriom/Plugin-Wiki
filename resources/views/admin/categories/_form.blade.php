@@ -1,8 +1,8 @@
 @csrf
 
-<div class="form-row">
-    <div class="form-group col-md-6">
-        <label for="nameInput">{{ trans('messages.fields.name') }}</label>
+<div class="row g-3">
+    <div class="mb-3 col-md-6">
+        <label class="form-label" for="nameInput">{{ trans('messages.fields.name') }}</label>
         <input type="text" class="form-control @error('name') is-invalid @enderror" id="nameInput" name="name" value="{{ old('name', $category->name ?? '') }}" required>
 
         @error('name')
@@ -10,13 +10,11 @@
         @enderror
     </div>
 
-    <div class="form-group col-md-6">
-        <label for="iconInput">{{ trans('messages.fields.icon') }}</label>
+    <div class="mb-3 col-md-6">
+        <label class="form-label" for="iconInput">{{ trans('messages.fields.icon') }}</label>
 
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <span class="input-group-text"><i class="{{ $category->icon ?? 'fas fa-book' }} fa-fw"></i></span>
-            </div>
+        <div class="input-group @error('icon') has-validation @enderror">
+            <span class="input-group-text"><i class="{{ $category->icon ?? 'fas fa-book' }} fa-fw"></i></span>
 
             <input type="text" class="form-control @error('icon') is-invalid @enderror" id="iconInput" name="icon" value="{{ old('icon', $category->icon ?? '') }}" placeholder="fas fa-book" aria-labelledby="iconLabel">
 
@@ -25,16 +23,14 @@
             @enderror
         </div>
 
-        <small id="iconLabel" class="form-text">@lang('wiki::admin.categories.icons')</small>
+        <small id="iconLabel" class="form-text">@lang('messages.fontawesome')</small>
     </div>
 </div>
 
-<div class="form-group">
-    <label for="slugInput">{{ trans('messages.fields.slug') }}</label>
-    <div class="input-group">
-        <div class="input-group-prepend">
-            <div class="input-group-text">{{ url('/wiki') }}/</div>
-        </div>
+<div class="mb-3">
+    <label class="form-label" for="slugInput">{{ trans('messages.fields.slug') }}</label>
+    <div class="input-group @error('slug') has-validation @enderror">
+        <div class="input-group-text">{{ url('/wiki') }}/</div>
         <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slugInput" name="slug" value="{{ old('slug', $category->slug ?? '') }}" required>
 
         @error('slug')
@@ -43,7 +39,7 @@
     </div>
 </div>
 
-<div class="form-group custom-control custom-switch">
-    <input type="checkbox" class="custom-control-input" id="enableSwitch" name="is_enabled" @if($category->is_enabled ?? true) checked @endif>
-    <label class="custom-control-label" for="enableSwitch">{{ trans('wiki::admin.categories.enable') }}</label>
+<div class="mb-3 form-check form-switch">
+    <input type="checkbox" class="form-check-input" id="enableSwitch" name="is_enabled" @checked($category->is_enabled ?? true)>
+    <label class="form-check-label" for="enableSwitch">{{ trans('wiki::admin.categories.enable') }}</label>
 </div>

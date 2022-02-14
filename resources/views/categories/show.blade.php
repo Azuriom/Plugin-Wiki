@@ -14,7 +14,7 @@
             <div class="col-md-3">
                 <div class="list-group" role="tablist">
                     @foreach($category->pages as $count => $page)
-                        <a href="#page{{ $page->id }}" class="list-group-item @if($count === 0) active @endif" data-toggle="tab" role="tab" aria-controls="page{{ $page->id }}" aria-selected="{{ $count === 0 ? 'true' : 'false' }}">
+                        <a href="#page{{ $page->id }}" class="list-group-item @if($count === 0) active @endif" data-bs-toggle="tab" role="tab" aria-controls="page{{ $page->id }}" aria-selected="{{ $count === 0 ? 'true' : 'false' }}">
                             {{ $page->title }}
                         </a>
                     @endforeach

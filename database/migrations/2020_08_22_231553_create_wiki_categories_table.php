@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateWikiCategoriesTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -19,6 +19,7 @@ class CreateWikiCategoriesTable extends Migration
             $table->string('name');
             $table->string('slug')->unique();
             $table->unsignedInteger('position')->default(0);
+            $table->boolean('is_enabled')->default(true);
             $table->timestamps();
         });
     }
@@ -32,4 +33,4 @@ class CreateWikiCategoriesTable extends Migration
     {
         Schema::dropIfExists('wiki_categories');
     }
-}
+};

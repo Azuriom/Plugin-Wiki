@@ -29,7 +29,7 @@ class CategoryController extends Controller
         Category::create($request->validated());
 
         return redirect()->route('wiki.admin.pages.index')
-            ->with('success', trans('wiki::admin.categories.status.created'));
+            ->with('success', trans('messages.status.success'));
     }
 
     /**
@@ -55,7 +55,7 @@ class CategoryController extends Controller
         $category->update($request->validated());
 
         return redirect()->route('wiki.admin.pages.index')
-            ->with('success', trans('wiki::admin.categories.status.updated'));
+            ->with('success', trans('messages.status.success'));
     }
 
     /**
@@ -71,6 +71,6 @@ class CategoryController extends Controller
         $category->delete();
 
         return redirect()->route('wiki.admin.pages.index')
-            ->with('success', trans('wiki::admin.categories.status.deleted'));
+            ->with('success', trans('messages.status.success'));
     }
 }
