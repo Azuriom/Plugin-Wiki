@@ -1,5 +1,6 @@
 <?php
 
+use Azuriom\Plugin\Wiki\Controllers\WikiController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +15,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'WikiController@index')->name('index');
-Route::get('/{category:slug}', 'WikiController@show')->name('show');
+Route::get('/', [WikiController::class, 'index'])->name('index');
+Route::get('/{category:slug}', [WikiController::class, 'show'])->name('show');

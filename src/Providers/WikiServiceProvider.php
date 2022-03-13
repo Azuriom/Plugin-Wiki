@@ -53,7 +53,7 @@ class WikiServiceProvider extends BasePluginServiceProvider
     protected function routeDescriptions()
     {
         return [
-            'wiki.index' => 'wiki::messages.title',
+            'wiki.index' => trans('wiki::messages.title'),
         ];
     }
 
@@ -66,8 +66,8 @@ class WikiServiceProvider extends BasePluginServiceProvider
     {
         return [
             'wiki' => [
-                'name' => 'wiki::admin.title',
-                'icon' => 'fas fa-book',
+                'name' => trans('wiki::admin.title'),
+                'icon' => 'bi bi-book',
                 'route' => 'wiki.admin.pages.index',
                 'permission' => 'wiki.admin',
             ],

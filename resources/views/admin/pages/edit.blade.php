@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin')
 
-@section('title', trans('admin.pages.title-edit', ['page' => $page->id]))
+@section('title', trans('admin.pages.edit', ['page' => $page->id]))
 
 @section('content')
     <div class="card shadow mb-4">
@@ -13,11 +13,11 @@
                 @include('admin.elements.editor', ['imagesUploadUrl' => route('wiki.admin.pages.attachments.store', $page)])
 
                 <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-save"></i> {{ trans('messages.actions.save') }}
+                    <i class="bi bi-save"></i> {{ trans('messages.actions.save') }}
                 </button>
 
                 <a href="{{ route('wiki.admin.pages.destroy', $page) }}" class="btn btn-danger" data-confirm="delete">
-                    <i class="fas fa-trash"></i> {{ trans('messages.actions.delete') }}
+                    <i class="bi bi-trash"></i> {{ trans('messages.actions.delete') }}
                 </a>
             </form>
         </div>

@@ -2,11 +2,12 @@
     "id": "wiki",
     "name": "Wiki",
     "description": "A wiki for your website.",
-    "version": "1.0.8",
+    "version": "1.0.0",
     "url": "https://market.azuriom.com/resources/28",
     "authors": [
         "Azuriom"
     ],
+    "azuriom_api": "1.0.0",
     "providers": [
         "\\Azuriom\\Plugin\\Wiki\\Providers\\WikiServiceProvider",
         "\\Azuriom\\Plugin\\Wiki\\Providers\\RouteServiceProvider"
