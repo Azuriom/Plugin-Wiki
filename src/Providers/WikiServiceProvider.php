@@ -67,7 +67,7 @@ class WikiServiceProvider extends BasePluginServiceProvider
         return [
             'wiki' => [
                 'name' => trans('wiki::admin.title'),
-                'icon' => 'fas fa-book',
+                'icon' => 'bi bi-book',
                 'route' => 'wiki.admin.pages.index',
                 'permission' => 'wiki.admin',
             ],

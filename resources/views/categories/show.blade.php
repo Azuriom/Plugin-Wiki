@@ -16,7 +16,7 @@
             </div>
 
             <a href="{{ route('wiki.index') }}" class="btn btn-secondary mb-3">
-                <i class="fas fa-arrow-left"></i> {{ trans('wiki::messages.back') }}
+                <i class="bi bi-arrow-left"></i> {{ trans('wiki::messages.back') }}
             </a>
         </div>
 

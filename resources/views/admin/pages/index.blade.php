@@ -63,7 +63,7 @@
 
             @if($categories->isEmpty())
                 <div class="alert alert-info" role="alert">
-                    <i class="fas fa-info-circle"></i>
+                    <i class="bi bi-info-circle"></i>
                     {{ trans('wiki::admin.categories.empty') }}
                 </div>
             @endif
@@ -74,14 +74,14 @@
                         <div class="card">
                             <div class="card-body d-flex justify-content-between">
                                 <span>
-                                    <i class="fas fa-arrows-alt sortable-handle"></i>
+                                    <i class="bi bi-arrows-move sortable-handle"></i>
                                     <a href="{{ route('wiki.show', $category) }}" target="_blank">
                                         {{ $category->name }}
                                     </a>
                                 </span>
                                 <span>
-                                    <a href="{{ route('wiki.admin.categories.edit', $category) }}" class="mx-1" title="{{ trans('messages.actions.edit') }}" data-bs-toggle="tooltip"><i class="fas fa-edit"></i></a>
-                                    <a href="{{ route('wiki.admin.categories.destroy', $category) }}" class="mx-1" title="{{ trans('messages.actions.delete') }}" data-bs-toggle="tooltip" data-confirm="delete"><i class="fas fa-trash"></i></a>
+                                    <a href="{{ route('wiki.admin.categories.edit', $category) }}" class="mx-1" title="{{ trans('messages.actions.edit') }}" data-bs-toggle="tooltip"><i class="bi bi-pencil-square"></i></a>
+                                    <a href="{{ route('wiki.admin.categories.destroy', $category) }}" class="mx-1" title="{{ trans('messages.actions.delete') }}" data-bs-toggle="tooltip" data-confirm="delete"><i class="bi bi-trash"></i></a>
                                 </span>
                             </div>
                         </div>
@@ -92,14 +92,14 @@
                                     <div class="card">
                                         <div class="card-body d-flex justify-content-between">
                                                 <span>
-                                                    <i class="fas fa-arrows-alt sortable-handle"></i>
+                                                    <i class="bi bi-arrows-move sortable-handle"></i>
 
                                                     <span>{{ $page->title }}</span>
                                                 </span>
 
                                             <span>
-                                                <a href="{{ route('wiki.admin.pages.edit', $page) }}" class="m-1" title="{{ trans('messages.actions.edit') }}" data-bs-toggle="tooltip"><i class="fas fa-edit"></i></a>
-                                                <a href="{{ route('wiki.admin.pages.destroy', $page) }}" class="m-1" title="{{ trans('messages.actions.delete') }}" data-bs-toggle="tooltip" data-confirm="delete"><i class="fas fa-trash"></i></a>
+                                                <a href="{{ route('wiki.admin.pages.edit', $page) }}" class="m-1" title="{{ trans('messages.actions.edit') }}" data-bs-toggle="tooltip"><i class="bi bi-pencil-square"></i></a>
+                                                <a href="{{ route('wiki.admin.pages.destroy', $page) }}" class="m-1" title="{{ trans('messages.actions.delete') }}" data-bs-toggle="tooltip" data-confirm="delete"><i class="bi bi-trash"></i></a>
                                             </span>
                                         </div>
                                     </div>
@@ -111,17 +111,17 @@
             </ol>
 
             <button type="button" class="btn btn-success" id="save">
-                <i class="fas fa-save"></i> {{ trans('messages.actions.save') }}
+                <i class="bi bi-save"></i> {{ trans('messages.actions.save') }}
                 <span class="spinner-border spinner-border-sm btn-spinner d-none" role="status"></span>
             </button>
 
             <a href="{{ route('wiki.admin.categories.create') }}" class="btn btn-primary">
-                <i class="fas fa-plus"></i> {{ trans('wiki::admin.categories.add') }}
+                <i class="bi bi-plus-lg"></i> {{ trans('wiki::admin.categories.add') }}
             </a>
 
             @if(! $categories->isEmpty())
                 <a class="btn btn-primary" href="{{ route('wiki.admin.pages.create') }}">
-                    <i class="fas fa-plus"></i> {{ trans('messages.actions.add') }}
+                    <i class="bi bi-plus-lg"></i> {{ trans('messages.actions.add') }}
                 </a>
             @endif
         </div>

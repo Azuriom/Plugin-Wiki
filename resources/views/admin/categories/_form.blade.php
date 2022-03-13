@@ -14,16 +14,16 @@
         <label class="form-label" for="iconInput">{{ trans('messages.fields.icon') }}</label>
 
         <div class="input-group @error('icon') has-validation @enderror">
-            <span class="input-group-text"><i class="{{ $category->icon ?? 'fas fa-book' }} fa-fw"></i></span>
+            <span class="input-group-text"><i class="{{ $category->icon ?? 'bi bi-book' }} fa-fw"></i></span>
 
-            <input type="text" class="form-control @error('icon') is-invalid @enderror" id="iconInput" name="icon" value="{{ old('icon', $category->icon ?? '') }}" placeholder="fas fa-book" aria-labelledby="iconLabel">
+            <input type="text" class="form-control @error('icon') is-invalid @enderror" id="iconInput" name="icon" value="{{ old('icon', $category->icon ?? '') }}" placeholder="bi bi-book" aria-labelledby="iconLabel">
 
             @error('icon')
             <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
             @enderror
         </div>
 
-        <small id="iconLabel" class="form-text">@lang('messages.fontawesome')</small>
+        <small id="iconLabel" class="form-text">@lang('messages.icons')</small>
     </div>
 </div>
 
