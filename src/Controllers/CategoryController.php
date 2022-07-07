@@ -4,9 +4,8 @@ namespace Azuriom\Plugin\Wiki\Controllers;
 
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Plugin\Wiki\Models\Category;
-use Illuminate\Support\Facades\Gate;
 
-class WikiController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,6 +15,7 @@ class WikiController extends Controller
     public function index()
     {
         $categories = Category::enabled()
+            ->has('pages')
             ->with('pages')
             ->orderBy('position')
             ->get();
@@ -33,8 +33,10 @@ class WikiController extends Controller
      */
     public function show(Category $category)
     {
-        abort_if(! $category->is_enabled && ! Gate::allows('wiki.admin'), 403);
+        $page = $category->pages->first();
 
-        return view('wiki::categories.show', ['category' => $category]);
+        abort_if($page === null, 404);
+
+        return redirect()->route('wiki.pages.show', [$category, $page]);
     }
 }

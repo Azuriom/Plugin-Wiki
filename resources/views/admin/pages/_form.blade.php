@@ -26,6 +26,18 @@
 </div>
 
 <div class="mb-3">
+    <label class="form-label" for="slugInput">{{ trans('messages.fields.slug') }}</label>
+    <div class="input-group @error('slug') has-validation @enderror">
+        <div class="input-group-text">{{ route('wiki.index') }}/{{ '{'.trans('wiki::admin.pages.category').'}' }}/</div>
+        <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slugInput" name="slug" value="{{ old('slug', $page->slug ?? '') }}" required>
+
+        @error('slug')
+        <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+        @enderror
+    </div>
+</div>
+
+<div class="mb-3">
     <label class="form-label" for="textArea">{{ trans('messages.fields.content') }}</label>
     <textarea class="form-control html-editor @error('content') is-invalid @enderror" id="textArea" name="content" rows="5">{{ old('content', $page->content ?? '') }}</textarea>
 

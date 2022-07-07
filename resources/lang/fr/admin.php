@@ -15,6 +15,7 @@ return [
     ],
 
     'pages' => [
+        'category' => 'catégorie',
         'updated' => 'Ordre des pages mis à jour.',
     ],
 

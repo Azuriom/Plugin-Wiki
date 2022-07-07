@@ -33,13 +33,13 @@ class Page extends Model
      * @var array
      */
     protected $fillable = [
-        'title', 'content', 'category_id',
+        'title', 'slug', 'content', 'category_id',
     ];
 
     /**
      * Get the category of this page.
      */
-    public function page()
+    public function category()
     {
         return $this->belongsTo(Category::class);
     }

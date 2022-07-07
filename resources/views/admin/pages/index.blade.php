@@ -75,9 +75,7 @@
                             <div class="card-body d-flex justify-content-between">
                                 <span>
                                     <i class="bi bi-arrows-move sortable-handle"></i>
-                                    <a href="{{ route('wiki.show', $category) }}" target="_blank">
-                                        {{ $category->name }}
-                                    </a>
+                                    {{ $category->name }}
                                 </span>
                                 <span>
                                     <a href="{{ route('wiki.admin.categories.edit', $category) }}" class="mx-1" title="{{ trans('messages.actions.edit') }}" data-bs-toggle="tooltip"><i class="bi bi-pencil-square"></i></a>
@@ -94,7 +92,9 @@
                                                 <span>
                                                     <i class="bi bi-arrows-move sortable-handle"></i>
 
-                                                    <span>{{ $page->title }}</span>
+                                                    <a href="{{ route('wiki.pages.show', [$page->category, $page]) }}" target="_blank">
+                                                        {{ $page->title }}
+                                                    </a>
                                                 </span>
 
                                             <span>
