@@ -18,8 +18,12 @@ return new class extends Migration
             $table->string('slug')->unique()->nullable()->after('title');
         });
 
-        foreach (Page::all() as $page) {
-            $page->update(['slug' => $page->id]);
+        try {
+            foreach (Page::all() as $page) {
+                $page->update(['slug' => $page->id]);
+            }
+        } catch (Throwable $t) {
+            // ignore
         }
     }
 

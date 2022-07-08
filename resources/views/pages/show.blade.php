@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $page->name)
+@section('title', $page->title)
 
 @section('content')
     <h1>{{ $page->category->name }}</h1>
