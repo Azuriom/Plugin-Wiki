@@ -5,7 +5,7 @@
 @section('content')
     <h1>{{ trans('wiki::messages.title') }}</h1>
 
-    <div class="row">
+    <div class="row" id="wiki">
         @foreach($categories as $category)
             <div class="col-md-3">
                 <a href="{{ route('wiki.show', $category) }}">

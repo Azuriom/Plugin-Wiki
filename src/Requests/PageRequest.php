@@ -16,11 +16,13 @@ class PageRequest extends FormRequest
      */
     public function rules()
     {
-        $page = $this->route('page');
+        $uniqueRule = Rule::unique(Page::class)
+            ->where('category_id', $this->input('category_id'))
+            ->ignore($this->route('page'), 'slug');
 
         return [
             'title' => ['required', 'string', 'max:100'],
-            'slug' => ['required', 'max:100', new Slug(), Rule::unique(Page::class)->ignore($page, 'slug')],
+            'slug' => ['required', 'max:100', new Slug(), $uniqueRule],
             'category_id' => ['required', 'exists:wiki_categories,id'],
             'content' => ['required', 'string'],
         ];

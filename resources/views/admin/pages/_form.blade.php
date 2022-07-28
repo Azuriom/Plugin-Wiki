@@ -15,7 +15,7 @@
 
         <select class="form-select" id="categorySelect" name="category_id">
             @foreach($categories as $category)
-                <option value="{{ $category->id }}" @selected(old('category_id', $page->category_id ?? 0) === $category->id)>{{ $category->name }}</option>
+                <option value="{{ $category->id }}" @selected((int) old('category_id', $page->category_id ?? 0) === $category->id)>{{ $category->name }}</option>
             @endforeach
         </select>
 

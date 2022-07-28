@@ -5,7 +5,7 @@
 @section('content')
     <h1>{{ $page->category->name }}</h1>
 
-    <div class="row">
+    <div class="row" id="wiki">
         <div class="col-md-3">
             <div class="list-group mb-3" role="tablist">
                 @foreach($page->category->pages as $catPage)
