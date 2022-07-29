@@ -1,8 +1,8 @@
 <?php
 
-use Azuriom\Plugin\Wiki\Models\Page;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -18,12 +18,10 @@ return new class extends Migration
             $table->string('slug')->unique()->nullable()->after('title');
         });
 
-        try {
-            foreach (Page::all() as $page) {
-                $page->update(['slug' => $page->id]);
-            }
-        } catch (Throwable $t) {
-            // ignore
+        foreach (DB::table('wiki_pages')->get() as $page) {
+            DB::table('wiki_pages')
+                ->where('id', $page->id)
+                ->update(['slug' => $page->id]);
         }
     }
 
