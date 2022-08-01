@@ -9,7 +9,12 @@
         <div class="col-md-3">
             <div class="list-group mb-3" role="tablist">
                 @foreach($page->category->pages as $catPage)
-                    <a class="list-group-item @if($page->is($catPage)) active @endif" id="page-list-{{ $catPage->id }}" onclick="select({{ $catPage->id }}, '{{ $catPage->slug }}')">
+                    <a href="{{ route('wiki.pages.show', [$page->category, $catPage]) }}" class="list-group-item @if($page->is($catPage)) active @endif"
+                       title="{{ $catPage->title }}"
+                       onclick="selectWikiPage(this)"
+                       data-bs-toggle="tab" role="tab"
+                       data-bs-target="#page-{{ $catPage->id }}"
+                       aria-controls="page-{{ $catPage->id }}" aria-selected="{{ $page->is($catPage) ? 'true' : 'false' }}">
                         {{ $catPage->title }}
                     </a>
                 @endforeach
@@ -20,11 +25,13 @@
             </a>
         </div>
 
-        <div class="col-md-9">
+        <div class="col-md-9 tab-content">
             @foreach($page->category->pages as $catPage)
-                <div class="card card-wiki" id="page-{{ $catPage->id }}" @if($catPage->id != $page->id) style="display: none;" @endif>
-                    <div class="card-body">
-                        {!! $catPage->content !!}
+                <div class="tab-pane fade @if($page->is($catPage)) show active @endif" id="page-{{ $catPage->id }}" role="tabpanel" aria-labelledby="nav-home-tab">
+                    <div class="card">
+                        <div class="card-body">
+                            {!! $catPage->content !!}
+                        </div>
                     </div>
                 </div>
             @endforeach
@@ -34,26 +41,28 @@
 
 @push('scripts')
     <script>
-        var focusPage = {{ $page->id }};
+        let currentTitle = '{{ $page->title }}';
 
-        function select(pageId, catLink) {
-            changeIfExist("page-" + focusPage, function (div) { div.style.display = 'none'; });
-            changeIfExist("page-list-" + focusPage, function (div) { div.classList.remove("active"); });
+        function selectWikiPage(element, replaceState = false) {
+            const tab = bootstrap.Tab.getOrCreateInstance(element);
+            tab.show();
 
-            changeIfExist("page-" + pageId, function (div) { div.style.display = null; });
-            changeIfExist("page-list-" + pageId, function (div) { div.classList.add("active"); });
-            focusPage = pageId;
-            window.history.pushState(null, null, catLink);
-        }
-
-        function changeIfExist(name, action) {
-            let div = document.getElementById(name);
-            if(div != null) {
-                action(div);
+            if (replaceState) {
+                history.replaceState({}, '', element.href);
+            } else {
+                window.history.pushState({}, '', element.href);
             }
+
+            document.title = document.title.replace(currentTitle, element.title);
+            currentTitle = element.title;
         }
+
         window.onpopstate = function(e) {
-            window.location.pathname = e.target.location.pathname;
+            const target = document.querySelector('[href="' + e.target.location.href + '"]');
+
+            if (target) {
+                selectWikiPage(target, true);
+            }
         };
     </script>
 @endpush
