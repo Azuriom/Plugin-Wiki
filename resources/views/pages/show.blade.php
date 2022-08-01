@@ -12,8 +12,7 @@
                     <a href="{{ route('wiki.pages.show', [$page->category, $catPage]) }}" class="list-group-item @if($page->is($catPage)) active @endif"
                        title="{{ $catPage->title }}"
                        onclick="selectWikiPage(this)"
-                       data-bs-toggle="tab" role="tab"
-                       data-bs-target="#page-{{ $catPage->id }}"
+                       data-bs-toggle="tab" data-bs-target="#page-{{ $catPage->id }}" role="tab"
                        aria-controls="page-{{ $catPage->id }}" aria-selected="{{ $page->is($catPage) ? 'true' : 'false' }}">
                         {{ $catPage->title }}
                     </a>
