@@ -52,5 +52,8 @@
                 action(div);
             }
         }
+        window.onpopstate = function(e) {
+            window.location.pathname = e.target.location.pathname;
+        };
     </script>
 @endpush
