@@ -47,7 +47,7 @@
             tab.show();
 
             if (replaceState) {
-                history.replaceState({}, '', element.href);
+                window.history.replaceState({}, '', element.href);
             } else {
                 window.history.pushState({}, '', element.href);
             }
