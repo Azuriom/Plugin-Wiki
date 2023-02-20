@@ -4,11 +4,22 @@ namespace Azuriom\Plugin\Wiki\Providers;
 
 use Azuriom\Extensions\Plugin\BasePluginServiceProvider;
 use Azuriom\Models\Permission;
+use Azuriom\Plugin\Wiki\Models\Category;
 use Azuriom\Plugin\Wiki\Models\Page;
+use Azuriom\Plugin\Wiki\Policies\CategoryPolicy;
 use Illuminate\Database\Eloquent\Relations\Relation;
 
 class WikiServiceProvider extends BasePluginServiceProvider
 {
+    /**
+     * The policy mappings for this plugin.
+     *
+     * @var array
+     */
+    protected array $policies = [
+        Category::class => CategoryPolicy::class,
+    ];
+
     /**
      * Register any plugin services.
      *

@@ -7,6 +7,18 @@
 
     <div class="row" id="wiki">
         <div class="col-md-3">
+            @if(! $page->category->categories->isEmpty())
+                <div class="list-group mb-3" role="tablist">
+                    @foreach($page->category->categories as $subCategory)
+                        @can('view', $subCategory)
+                            <a href="{{ route('wiki.show', [$subCategory]) }}" class="list-group-item">
+                                <i class="{{ $category->icon ?? 'bi bi-book' }}"></i> {{ $subCategory->name }}
+                            </a>
+                        @endcan
+                    @endforeach
+                </div>
+            @endif
+
             <div class="list-group mb-3" role="tablist">
                 @foreach($page->category->pages as $catPage)
                     <a href="{{ route('wiki.pages.show', [$page->category, $catPage]) }}" class="list-group-item @if($page->is($catPage)) active @endif"
@@ -19,9 +31,15 @@
                 @endforeach
             </div>
 
-            <a href="{{ route('wiki.index') }}" class="btn btn-secondary mb-3">
-                <i class="bi bi-arrow-left"></i> {{ trans('wiki::messages.back') }}
-            </a>
+            @if($page->category->parent !== null)
+                <a href="{{ route('wiki.show', $page->category->parent) }}" class="btn btn-secondary mb-3">
+                    <i class="bi bi-arrow-left"></i> {{ trans('wiki::messages.back') }}
+                </a>
+            @else
+                <a href="{{ route('wiki.index') }}" class="btn btn-secondary mb-3">
+                    <i class="bi bi-arrow-left"></i> {{ trans('wiki::messages.back') }}
+                </a>
+            @endif
         </div>
 
         <div class="col-md-9 tab-content">

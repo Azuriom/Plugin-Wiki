@@ -7,32 +7,56 @@
     <script>
         const sortable = Sortable.create(document.getElementById('categories'), {
             animation: 150,
-            group: 'categories',
+            group: 'pages',
             handle: '.sortable-handle',
+            put: function (to, sortable, drag) {
+                return drag.classList.contains('category-parent');
+            },
         });
 
         document.querySelectorAll('.wiki-list').forEach(function (el) {
             Sortable.create(el, {
                 group: {
                     name: 'pages',
+                    put: function (to, sortable, drag) {
+                        if (!drag.classList.contains('category-parent')) {
+                            return true;
+                        }
+                        return !drag.querySelector('.category-parent .category-parent')
+                            && drag.parentNode.id === 'categories';
+                    },
                 },
                 animation: 150,
                 handle: '.sortable-handle',
             });
         });
 
+        function serializeCategory(category, preventNested = false) {
+            const pagesId = [];
+            const subCategories = [];
+            const pages = category.querySelector('.wiki-list');
+
+            [].slice.call(pages.children).forEach(function (pageCategory) {
+                if (!pageCategory.classList.contains('category-parent')) {
+                    pagesId.push(pageCategory.dataset['id']);
+                    return;
+                }
+
+                if (!preventNested) {
+                    subCategories.push(serializeCategory(pageCategory, true));
+                }
+            });
+
+            return {
+                id: category.dataset['categoryId'],
+                categories: subCategories,
+                pages: pagesId
+            };
+        }
+
         function serialize(categories) {
-            return [].slice.call(categories).map(function (category) {
-                const pages = category.querySelector('.wiki-list');
-
-                const pagesId = [].slice.call(pages.children).map(function (categoryPackage) {
-                    return categoryPackage.dataset['id'];
-                });
-
-                return {
-                    id: category.dataset['categoryId'],
-                    pages: pagesId,
-                };
+            return [].slice.call(categories.children).map(function (category) {
+                return serializeCategory(category);
             });
         }
 
@@ -44,7 +68,7 @@
             saveButtonIcon.classList.remove('d-none');
 
             axios.post('{{ route('wiki.admin.pages.update-order') }}', {
-                'categories': serialize(sortable.el.children),
+                'categories': serialize(sortable.el),
             }).then(function (json) {
                 createAlert('success', json.data.message, true);
             }).catch(function (error) {
@@ -68,46 +92,8 @@
                 </div>
             @endif
 
-            <ol class="list-unstyled sortable mb-3" id="categories">
-                @foreach($categories as $category)
-                    <li class="sortable-item sortable-dropdown mb-5" data-category-id="{{ $category->id }}">
-                        <div class="card">
-                            <div class="card-body d-flex justify-content-between">
-                                <span>
-                                    <i class="bi bi-arrows-move sortable-handle"></i>
-                                    {{ $category->name }}
-                                </span>
-                                <span>
-                                    <a href="{{ route('wiki.admin.categories.edit', $category) }}" class="mx-1" title="{{ trans('messages.actions.edit') }}" data-bs-toggle="tooltip"><i class="bi bi-pencil-square"></i></a>
-                                    <a href="{{ route('wiki.admin.categories.destroy', $category) }}" class="mx-1" title="{{ trans('messages.actions.delete') }}" data-bs-toggle="tooltip" data-confirm="delete"><i class="bi bi-trash"></i></a>
-                                </span>
-                            </div>
-                        </div>
-
-                        <ol class="list-unstyled sortable sortable-list wiki-list">
-                            @foreach($category->pages as $page)
-                                <li class="sortable-item sortable-dropdown" data-id="{{ $page->id }}">
-                                    <div class="card">
-                                        <div class="card-body d-flex justify-content-between">
-                                                <span>
-                                                    <i class="bi bi-arrows-move sortable-handle"></i>
-
-                                                    <a href="{{ route('wiki.pages.show', [$page->category, $page]) }}" target="_blank">
-                                                        {{ $page->title }}
-                                                    </a>
-                                                </span>
-
-                                            <span>
-                                                <a href="{{ route('wiki.admin.pages.edit', $page) }}" class="m-1" title="{{ trans('messages.actions.edit') }}" data-bs-toggle="tooltip"><i class="bi bi-pencil-square"></i></a>
-                                                <a href="{{ route('wiki.admin.pages.destroy', $page) }}" class="m-1" title="{{ trans('messages.actions.delete') }}" data-bs-toggle="tooltip" data-confirm="delete"><i class="bi bi-trash"></i></a>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </li>
-                            @endforeach
-                        </ol>
-                    </li>
-                @endforeach
+            <ol class="list-unstyled sortable mb-3 wiki-list" id="categories">
+                @each('wiki::admin.pages._category', $categories, 'category')
             </ol>
 
             <button type="button" class="btn btn-success" id="save">

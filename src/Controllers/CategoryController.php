@@ -4,6 +4,7 @@ namespace Azuriom\Plugin\Wiki\Controllers;
 
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Plugin\Wiki\Models\Category;
+use Illuminate\Support\Facades\Gate;
 
 class CategoryController extends Controller
 {
@@ -14,15 +15,11 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::enabled()
-            ->has('pages')
-            ->with('pages')
-            ->orderBy('position')
-            ->get();
+        $categories = Category::scopes(['parents', 'enabled'])
+            ->get()
+            ->filter(fn (Category $cat) => Gate::allows('view', $cat));
 
-        return view('wiki::categories.index', [
-            'categories' => $categories,
-        ]);
+        return view('wiki::categories.index', ['categories' => $categories]);
     }
 
     /**
@@ -33,7 +30,14 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
+        $this->authorize('view', $category);
+
         $page = $category->pages->first();
+        $subCategory = $category->categories->first();
+
+        if ($page === null && $subCategory !== null) {
+            $page = $subCategory->pages->first();
+        }
 
         abort_if($page === null, 404);
 

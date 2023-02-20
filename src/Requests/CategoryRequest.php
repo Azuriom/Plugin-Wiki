@@ -34,7 +34,20 @@ class CategoryRequest extends FormRequest
             'icon' => ['nullable', 'string', 'max:50'],
             'name' => ['required', 'string', 'max:50'],
             'slug' => ['required', 'string', 'max:100', new Slug(), $slugRule],
+            'parent_id' => ['nullable', 'exists:wiki_categories,id'],
+            'roles' => ['sometimes', 'nullable', 'array'],
             'is_enabled' => ['filled', 'boolean'],
         ];
+    }
+
+    public function validated($key = null, $value = null)
+    {
+        $validated = parent::validated();
+
+        if (! $this->filled('is_private')) {
+            $validated['roles'] = null;
+        }
+
+        return $validated;
     }
 }

@@ -18,9 +18,12 @@ class PageController extends Controller
      */
     public function index()
     {
-        return view('wiki::admin.pages.index', [
-            'categories' => Category::with('pages')->orderBy('position')->get(),
-        ]);
+        $categories = Category::parents()
+            ->with('pages')
+            ->orderBy('position')
+            ->get();
+
+        return view('wiki::admin.pages.index', ['categories' => $categories]);
     }
 
     /**
@@ -44,12 +47,28 @@ class PageController extends Controller
         foreach ($categories as $category) {
             $id = $category['id'];
             $pages = $category['pages'] ?? [];
+            $subCategories = $category['categories'] ?? [];
 
             Category::whereKey($id)->update([
                 'position' => $categoryPosition++,
+                'parent_id' => null,
             ]);
 
             $pagePosition = 1;
+
+            foreach ($subCategories as $subCategory) {
+                Category::whereKey($subCategory['id'])->update([
+                    'position' => $pagePosition++,
+                    'parent_id' => $id,
+                ]);
+
+                foreach ($subCategory['pages'] ?? [] as $page) {
+                    Page::whereKey($page)->update([
+                        'position' => $pagePosition++,
+                        'category_id' => $subCategory['id'],
+                    ]);
+                }
+            }
 
             foreach ($pages as $page) {
                 Page::whereKey($page)->update([

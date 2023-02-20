@@ -3,6 +3,7 @@
 namespace Azuriom\Plugin\Wiki\Controllers\Admin;
 
 use Azuriom\Http\Controllers\Controller;
+use Azuriom\Models\Role;
 use Azuriom\Plugin\Wiki\Models\Category;
 use Azuriom\Plugin\Wiki\Requests\CategoryRequest;
 
@@ -15,7 +16,10 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('wiki::admin.categories.create');
+        return view('wiki::admin.categories.create', [
+            'categories' => Category::parents()->get(),
+            'roles' => Role::orderByDesc('power')->get(),
+        ]);
     }
 
     /**
@@ -40,7 +44,11 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        return view('wiki::admin.categories.edit', ['category' => $category]);
+        return view('wiki::admin.categories.edit', [
+            'category' => $category,
+            'categories' => Category::parents()->get()->except($category->id),
+            'roles' => Role::orderByDesc('power')->get(),
+        ]);
     }
 
     /**
