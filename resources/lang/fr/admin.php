@@ -9,7 +9,7 @@ return [
         'create' => 'Créer une catégorie',
 
         'add' => 'Ajouter une catégorie',
-        'enable' => 'Activer cette category',
+        'enable' => 'Activer cette catégorie',
         'parent' => 'Catégorie parente',
         'limit' => 'Limiter l\'accès à cette catégorie à certains rôles.',
 
