@@ -4,6 +4,7 @@ namespace Azuriom\Plugin\Wiki\Models;
 
 use Azuriom\Models\Traits\Attachable;
 use Azuriom\Models\Traits\HasTablePrefix;
+use Azuriom\Models\Traits\Searchable;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -19,6 +20,7 @@ class Page extends Model
 {
     use Attachable;
     use HasTablePrefix;
+    use Searchable;
 
     /**
      * The table prefix associated with the model.
@@ -34,6 +36,15 @@ class Page extends Model
      */
     protected $fillable = [
         'title', 'slug', 'content', 'category_id',
+    ];
+
+    /**
+     * The attributes that can be search for.
+     *
+     * @var array
+     */
+    protected $searchable = [
+        'title', 'content',
     ];
 
     /**

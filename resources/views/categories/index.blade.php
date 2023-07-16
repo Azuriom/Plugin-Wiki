@@ -3,7 +3,7 @@
 @section('title', trans('wiki::messages.title'))
 
 @section('content')
-    <h1>{{ trans('wiki::messages.title') }}</h1>
+    @include('wiki::partials._header', ['title' => trans('wiki::messages.title')])
 
     <div class="row" id="wiki">
         @foreach($categories as $category)

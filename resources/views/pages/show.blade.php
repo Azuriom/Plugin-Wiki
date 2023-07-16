@@ -3,7 +3,7 @@
 @section('title', $page->title)
 
 @section('content')
-    <h1>{{ $page->category->name }}</h1>
+    @include('wiki::partials._header', ['title' => $page->category->name])
 
     <div class="row" id="wiki">
         <div class="col-md-3">

@@ -19,7 +19,7 @@ class PageController extends Controller
     public function index()
     {
         $categories = Category::parents()
-            ->with('pages')
+            ->with(['categories', 'pages.category'])
             ->orderBy('position')
             ->get();
 
