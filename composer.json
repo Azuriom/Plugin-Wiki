@@ -1,7 +1,7 @@
 {
     "name": "azuriom/wiki",
     "type": "azuriom-plugin",
-    "description": "Plugin for Azuriom",
+    "description": "A complete wiki for your website.",
     "autoload": {
         "psr-4": {
             "Azuriom\\Plugin\\Wiki\\": "src/"

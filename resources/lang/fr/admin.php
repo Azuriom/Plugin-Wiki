@@ -11,7 +11,7 @@ return [
         'add' => 'Ajouter une catégorie',
         'enable' => 'Activer cette catégorie',
         'parent' => 'Catégorie parente',
-        'limit' => 'Limiter l\'accès à cette catégorie à certains rôles.',
+        'private' => 'Limiter l\'accès à cette catégorie à certains rôles.',
 
         'empty' => 'Aucune catégorie n\'a été créée actuellement.',
     ],

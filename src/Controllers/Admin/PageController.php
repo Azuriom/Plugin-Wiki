@@ -13,8 +13,6 @@ class PageController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
@@ -28,9 +26,6 @@ class PageController extends Controller
 
     /**
      * Update the resources order in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      *
      * @throws \Illuminate\Validation\ValidationException
      */
@@ -85,8 +80,6 @@ class PageController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function create()
     {
@@ -98,9 +91,6 @@ class PageController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Azuriom\Plugin\Wiki\Requests\PageRequest  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(PageRequest $request)
     {
@@ -108,15 +98,12 @@ class PageController extends Controller
 
         $page->persistPendingAttachments($request->input('pending_id'));
 
-        return redirect()->route('wiki.admin.pages.index')
+        return to_route('wiki.admin.pages.index')
             ->with('success', trans('messages.status.success'));
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  \Azuriom\Plugin\Wiki\Models\Page  $page
-     * @return \Illuminate\Http\Response
      */
     public function edit(Page $page)
     {
@@ -128,32 +115,25 @@ class PageController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Azuriom\Plugin\Wiki\Requests\PageRequest  $request
-     * @param  \Azuriom\Plugin\Wiki\Models\Page  $page
-     * @return \Illuminate\Http\Response
      */
     public function update(PageRequest $request, Page $page)
     {
         $page->update($request->validated());
 
-        return redirect()->route('wiki.admin.pages.index')
+        return to_route('wiki.admin.pages.index')
             ->with('success', trans('messages.status.success'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \Azuriom\Plugin\Wiki\Models\Page  $page
-     * @return \Illuminate\Http\Response
-     *
-     * @throws \Exception
+     * @throws \LogicException
      */
     public function destroy(Page $page)
     {
         $page->delete();
 
-        return redirect()->route('wiki.admin.pages.index')
+        return to_route('wiki.admin.pages.index')
             ->with('success', trans('messages.status.success'));
     }
 }

@@ -11,10 +11,6 @@ class CategoryPageController extends Controller
 {
     /**
      * Display the specified resource.
-     *
-     * @param  \Azuriom\Plugin\Wiki\Models\Category  $category
-     * @param  \Azuriom\Plugin\Wiki\Models\Page  $page
-     * @return \Illuminate\Http\Response
      */
     public function show(Category $category, Page $page)
     {

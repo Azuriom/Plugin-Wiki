@@ -24,26 +24,24 @@ class Page extends Model
 
     /**
      * The table prefix associated with the model.
-     *
-     * @var string
      */
-    protected $prefix = 'wiki_';
+    protected string $prefix = 'wiki_';
 
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $fillable = [
         'title', 'slug', 'content', 'category_id',
     ];
 
     /**
-     * The attributes that can be search for.
+     * The attributes that can be used for search.
      *
-     * @var array
+     * @var array<int, string>
      */
-    protected $searchable = [
+    protected array $searchable = [
         'title', 'content',
     ];
 

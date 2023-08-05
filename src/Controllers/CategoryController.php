@@ -12,8 +12,6 @@ class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
@@ -26,9 +24,6 @@ class CategoryController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param  \Azuriom\Plugin\Wiki\Models\Category  $category
-     * @return \Illuminate\Http\Response
      */
     public function show(Category $category)
     {
@@ -43,21 +38,18 @@ class CategoryController extends Controller
 
         abort_if($page === null, 404);
 
-        return redirect()->route('wiki.pages.show', [$category, $page]);
+        return to_route('wiki.pages.show', [$category, $page]);
     }
 
     /**
      * Find the users with the specified name.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Resources\Json\JsonResource
      */
     public function search(Request $request)
     {
         $search = $request->input('q');
 
         if ($search === null) {
-            return redirect()->route('wiki.index');
+            return to_route('wiki.index');
         }
 
         $pages = Page::search($search)->with('category')->paginate();

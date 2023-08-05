@@ -13,20 +13,20 @@ class CategoryRequest extends FormRequest
     use ConvertCheckbox;
 
     /**
-     * The checkboxes attributes.
+     * The attributes represented by checkboxes.
      *
-     * @var array
+     * @var array<int, string>
      */
-    protected $checkboxes = [
+    protected array $checkboxes = [
         'is_enabled',
     ];
 
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
-    public function rules()
+    public function rules(): array
     {
         $slugRule = Rule::unique(Category::class)->ignore($this->category, 'slug');
 
@@ -40,14 +40,15 @@ class CategoryRequest extends FormRequest
         ];
     }
 
-    public function validated($key = null, $value = null)
+    /**
+     * Prepare the data for validation.
+     */
+    protected function prepareForValidation(): void
     {
-        $validated = parent::validated();
+        $this->mergeCheckboxes();
 
-        if (! $this->filled('is_private')) {
-            $validated['roles'] = null;
+        if (! $this->filled('is_private') || ! $this->has('roles')) {
+            $this->merge(['roles' => null]);
         }
-
-        return $validated;
     }
 }

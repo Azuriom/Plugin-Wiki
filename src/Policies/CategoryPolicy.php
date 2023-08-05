@@ -12,12 +12,8 @@ class CategoryPolicy
 
     /**
      * Determine whether the user can view the category.
-     *
-     * @param  \Azuriom\Models\User|null  $user
-     * @param  \Azuriom\Plugin\Wiki\Models\Category  $category
-     * @return mixed
      */
-    public function view(?User $user, Category $category)
+    public function view(?User $user, Category $category): bool
     {
         if ($category->roles === null) {
             return true;

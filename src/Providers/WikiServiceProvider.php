@@ -14,7 +14,7 @@ class WikiServiceProvider extends BasePluginServiceProvider
     /**
      * The policy mappings for this plugin.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected array $policies = [
         Category::class => CategoryPolicy::class,
@@ -22,20 +22,16 @@ class WikiServiceProvider extends BasePluginServiceProvider
 
     /**
      * Register any plugin services.
-     *
-     * @return void
      */
-    public function register()
+    public function register(): void
     {
         //
     }
 
     /**
      * Bootstrap any plugin services.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         $this->loadViews();
 
@@ -59,9 +55,9 @@ class WikiServiceProvider extends BasePluginServiceProvider
     /**
      * Returns the routes that should be able to be added to the navbar.
      *
-     * @return array
+     * @return array<string, string>
      */
-    protected function routeDescriptions()
+    protected function routeDescriptions(): array
     {
         return [
             'wiki.index' => trans('wiki::messages.title'),
@@ -71,9 +67,9 @@ class WikiServiceProvider extends BasePluginServiceProvider
     /**
      * Return the admin navigations routes to register in the dashboard.
      *
-     * @return array
+     * @return array<string, array<string, string>>
      */
-    protected function adminNavigation()
+    protected function adminNavigation(): array
     {
         return [
             'wiki' => [

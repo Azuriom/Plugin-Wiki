@@ -31,15 +31,13 @@ class Category extends Model
 
     /**
      * The table prefix associated with the model.
-     *
-     * @var string
      */
-    protected $prefix = 'wiki_';
+    protected string $prefix = 'wiki_';
 
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $fillable = [
         'icon', 'name', 'slug', 'roles', 'position', 'parent_id', 'is_enabled',
@@ -48,7 +46,7 @@ class Category extends Model
     /**
      * The attributes that should be cast to native types.
      *
-     * @var array
+     * @var array<string, string>
      */
     protected $casts = [
         'roles' => 'array',
@@ -79,12 +77,12 @@ class Category extends Model
         return $this->hasMany(Page::class)->orderBy('position');
     }
 
-    public function hasRole(Role $role)
+    public function hasRole(Role $role): bool
     {
         return in_array($role->id, $this->roles, true);
     }
 
-    public function setRolesAttribute(?array $roles)
+    public function setRolesAttribute(?array $roles): void
     {
         $ids = $roles === null ? $roles : array_map(fn ($val) => (int) $val, $roles);
 
@@ -93,17 +91,17 @@ class Category extends Model
 
     /**
      * Scope a query to only include enabled categories.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeEnabled(Builder $query)
+    public function scopeEnabled(Builder $query): void
     {
-        return $query->where('is_enabled', true);
+        $query->where('is_enabled', true);
     }
 
-    public function scopeParents(Builder $query)
+    /**
+     * Scope a query to only include parents categories.
+     */
+    public function scopeParents(Builder $query): void
     {
-        return $query->whereNull('parent_id')->orderBy('position');
+        $query->whereNull('parent_id')->orderBy('position');
     }
 }
