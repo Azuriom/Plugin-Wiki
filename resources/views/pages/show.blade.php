@@ -12,7 +12,7 @@
                     @foreach($page->category->categories as $subCategory)
                         @can('view', $subCategory)
                             <a href="{{ route('wiki.show', [$subCategory]) }}" class="list-group-item">
-                                <i class="{{ $category->icon ?? 'bi bi-book' }}"></i> {{ $subCategory->name }}
+                                <i class="{{ $subCategory->icon ?? 'bi bi-book' }}"></i> {{ $subCategory->name }}
                             </a>
                         @endcan
                     @endforeach

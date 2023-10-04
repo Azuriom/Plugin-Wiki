@@ -10,8 +10,8 @@
             <div class="col-md-3">
                 <a href="{{ route('wiki.show', $category) }}">
                     <div class="card">
-                        <div class="card-body text-center text-primary">
-                            <i class="{{ $category->icon ?? 'bi bi-book' }} fs-1 mb-3"></i>
+                        <div class="card-body text-center">
+                            <i class="{{ $category->icon ?? 'bi bi-book' }} fs-1 mb-3 text-primary"></i>
 
                             <h2>{{ $category->name }}</h2>
                         </div>

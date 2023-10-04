@@ -4,7 +4,7 @@
     </div>
 
     <div class="col-md-3">
-        <form class="mb-3" action="{{ route('wiki.search') }}" method="GET">
+        <form class="mb-3" action="{{ route('wiki.search') }}" method="GET" role="search">
             <label class="visually-hidden" for="searchInput">
                 {{ trans('messages.actions.search') }}
             </label>
