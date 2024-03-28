@@ -14,6 +14,8 @@ return [
         'private' => 'Limiter l\'accès à cette catégorie à certains rôles.',
 
         'empty' => 'Aucune catégorie n\'a été créée actuellement.',
+
+        'info' => 'Pour être visible, une catégorie doit contenir au moins une page qui n\'est pas dans une sous-catégorie.',
     ],
 
     'pages' => [

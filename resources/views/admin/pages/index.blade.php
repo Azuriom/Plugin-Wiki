@@ -7,11 +7,13 @@
     <script>
         const sortable = Sortable.create(document.getElementById('categories'), {
             animation: 150,
-            group: 'pages',
-            handle: '.sortable-handle',
-            put: function (to, sortable, drag) {
-                return drag.classList.contains('category-parent');
+            group: {
+                name: 'pages',
+                put: function (to, sortable, drag) {
+                    return drag.classList.contains('category-parent');
+                },
             },
+            handle: '.sortable-handle',
         });
 
         document.querySelectorAll('.wiki-list').forEach(function (el) {
@@ -92,7 +94,7 @@
                 </div>
             @endif
 
-            <ol class="list-unstyled sortable mb-3 wiki-list" id="categories">
+            <ol class="list-unstyled sortable mb-3" id="categories">
                 @each('wiki::admin.pages._category', $categories, 'category')
             </ol>
 
@@ -111,5 +113,9 @@
                 </a>
             @endif
         </div>
+    </div>
+
+    <div class="alert alert-info" role="alert">
+        <i class="bi bi-info-circle"></i> @lang('wiki::admin.categories.info')
     </div>
 @endsection

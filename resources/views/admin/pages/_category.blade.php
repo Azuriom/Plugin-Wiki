@@ -1,9 +1,11 @@
-<li class="sortable-item sortable-dropdown category-parent" data-category-id="{{ $category->id }}">
-    <div class="card">
+<li class="sortable-item sortable-dropdown category-parent" data-category-id="{{ $category->id }}" v-scope="{ show: true }">
+    <div class="card" :class="show ? '' : 'opacity-25'">
         <div class="card-body d-flex justify-content-between">
             <span>
                 <i class="bi bi-arrows-move sortable-handle"></i>
                 {{ $category->name }}
+                <a href="#" v-show="show" @click.cancel="show = false" class="mx-1" title="{{ trans('messages.actions.collapse') }}" data-bs-toggle="tooltip"><i class="bi bi-arrows-collapse"></i></a>
+                <a href="#" v-show="!show" @click.cancel="show = true" class="mx-1" title="{{ trans('messages.actions.expand') }}" data-bs-toggle="tooltip"><i class="bi bi-arrows-expand"></i></a>
             </span>
             <span>
                 <a href="{{ route('wiki.admin.categories.edit', $category) }}" class="mx-1" title="{{ trans('messages.actions.edit') }}" data-bs-toggle="tooltip"><i class="bi bi-pencil-square"></i></a>
@@ -12,7 +14,7 @@
         </div>
     </div>
 
-    <ol class="list-unstyled sortable sortable-list wiki-list">
+    <ol v-show="show" class="list-unstyled sortable sortable-list wiki-list">
         @each('wiki::admin.pages._category', $category->categories, 'category')
 
         @foreach($category->pages as $page)

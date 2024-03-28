@@ -14,6 +14,8 @@ return [
         'private' => 'Limit roles with access to this category',
 
         'empty' => 'No category has been created currently.',
+
+        'info' => 'To be visible, a category must contain at least one page that is not in a subcategory.',
     ],
 
     'pages' => [
