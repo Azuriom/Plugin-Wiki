@@ -1,6 +1,6 @@
 @csrf
 
-<div class="row g-3">
+<div class="row gx-3">
     <div class="mb-3 col-md-6">
         <label class="form-label" for="titleInput">{{ trans('messages.fields.title') }}</label>
         <input type="text" class="form-control @error('title') is-invalid @enderror" id="titleInput" name="title" value="{{ old('title', $page->title ?? '') }}" required>

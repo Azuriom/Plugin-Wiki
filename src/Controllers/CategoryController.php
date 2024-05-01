@@ -5,6 +5,7 @@ namespace Azuriom\Plugin\Wiki\Controllers;
 use Azuriom\Http\Controllers\Controller;
 use Azuriom\Plugin\Wiki\Models\Category;
 use Azuriom\Plugin\Wiki\Models\Page;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -42,7 +43,7 @@ class CategoryController extends Controller
     }
 
     /**
-     * Find the users with the specified name.
+     * Find the resources for the specified query.
      */
     public function search(Request $request)
     {
@@ -52,7 +53,10 @@ class CategoryController extends Controller
             return to_route('wiki.index');
         }
 
-        $pages = Page::search($search)->with('category')->paginate();
+        $pages = Page::search($search)
+            ->whereHas('category', fn (Builder $query) => $query->enabled())
+            ->with('category')
+            ->paginate();
 
         return view('wiki::pages.search', [
             'pages' => $pages,

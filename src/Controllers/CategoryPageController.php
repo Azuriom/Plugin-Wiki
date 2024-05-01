@@ -14,6 +14,8 @@ class CategoryPageController extends Controller
      */
     public function show(Category $category, Page $page)
     {
+        $this->authorize('view', $category);
+
         abort_if(! $category->is_enabled && ! Gate::allows('wiki.admin'), 403);
 
         $page->load('category.pages');
