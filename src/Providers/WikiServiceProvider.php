@@ -7,7 +7,11 @@ use Azuriom\Models\Permission;
 use Azuriom\Plugin\Wiki\Models\Category;
 use Azuriom\Plugin\Wiki\Models\Page;
 use Azuriom\Plugin\Wiki\Policies\CategoryPolicy;
+use Azuriom\Plugin\Wiki\Support\PageNavigator;
+use Azuriom\Plugin\Wiki\View\Composers\NavigatorComposer;
+use Azuriom\Plugin\Wiki\View\Composers\TreeComposer;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\Facades\View;
 
 class WikiServiceProvider extends BasePluginServiceProvider
 {
@@ -25,7 +29,7 @@ class WikiServiceProvider extends BasePluginServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->singleton(PageNavigator::class);
     }
 
     /**
@@ -50,6 +54,9 @@ class WikiServiceProvider extends BasePluginServiceProvider
         ]);
 
         Relation::morphMap(['wiki.pages' => Page::class]);
+
+        View::composer('wiki::partials.tree', TreeComposer::class);
+        View::composer('wiki::partials.prev-next', NavigatorComposer::class);
     }
 
     /**
@@ -74,9 +81,14 @@ class WikiServiceProvider extends BasePluginServiceProvider
         return [
             'wiki' => [
                 'name' => trans('wiki::admin.title'),
+                'type' => 'dropdown',
                 'icon' => 'bi bi-book',
-                'route' => 'wiki.admin.pages.index',
+                'route' => 'wiki.admin.*',
                 'permission' => 'wiki.admin',
+                'items' => [
+                    'wiki.admin.pages.index' => trans('wiki::admin.pages.title'),
+                    'wiki.admin.settings' => trans('wiki::admin.settings.title'),
+                ],
             ],
         ];
     }

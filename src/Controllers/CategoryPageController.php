@@ -19,6 +19,10 @@ class CategoryPageController extends Controller
 
         abort_if(! $category->is_enabled && ! Gate::allows('wiki.admin'), 403);
 
+        if (setting('wiki.layout', 'default') === 'documentation') {
+            return view('wiki::pages.show-documentation', ['page' => $page]);
+        }
+
         $page->load([
             'category.pages',
             'category.categories' => fn (Builder $q) => $q->scopes('enabled'),

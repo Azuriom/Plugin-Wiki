@@ -19,8 +19,17 @@ return [
     ],
 
     'pages' => [
+        'title' => 'Pages',
         'category' => 'category',
         'updated' => 'Pages order updated.',
+    ],
+
+    'settings' => [
+        'title' => 'Settings',
+        'layout' => 'Layout',
+        'layout_default' => 'Default',
+        'layout_documentation' => 'Documentation',
+        'layout_info' => 'The documentation layout displays all the categories in a sidebar tree, with a table of contents and a quick search modal.',
     ],
 
     'permission' => 'Manage wiki',

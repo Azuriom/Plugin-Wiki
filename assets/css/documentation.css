@@ -1,0 +1,296 @@
+/* Wiki documentation layout — relies on Bootstrap 5 CSS custom properties from the active theme. */
+
+:root {
+    --wiki-docs-sticky-top: 1rem;
+    --wiki-docs-tree-indent: 1rem;
+}
+
+.wiki-docs-sidebar {
+    top: var(--wiki-docs-sticky-top);
+    max-height: calc(100vh - var(--wiki-docs-sticky-top) - 1rem);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+@media (min-width: 992px) {
+    .wiki-docs-shell .wiki-docs-tree-aside,
+    .wiki-docs-shell #wiki-content ~ aside {
+        width: 22%;
+    }
+    .wiki-docs-shell #wiki-content {
+        width: 56%;
+    }
+    .wiki-docs-tree-aside {
+        overflow: visible;
+        max-height: none;
+    }
+    .wiki-docs-tree-aside > #wiki-tree {
+        position: sticky;
+        top: var(--wiki-docs-sticky-top, 1rem);
+        max-height: calc(100vh - var(--wiki-docs-sticky-top, 1rem) - 1rem);
+        overflow-y: auto;
+        overflow-x: hidden;
+        padding: 0 .5rem 0 0;
+    }
+}
+
+/* --- Tree --- */
+
+.wiki-docs-tree {
+    margin: 0;
+    padding: 0;
+}
+
+.wiki-docs-tree ul {
+    margin: 0;
+    padding-left: var(--wiki-docs-tree-indent);
+    border-left: 1px solid var(--bs-border-color);
+}
+
+.wiki-docs-tree-cat-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.35rem 0.5rem;
+    border: 0;
+    background: transparent;
+    color: var(--bs-body-color);
+    border-radius: var(--bs-border-radius);
+    text-align: left;
+}
+
+.wiki-docs-tree-cat-btn:hover {
+    background: var(--bs-tertiary-bg);
+}
+
+.wiki-docs-tree-chevron {
+    transition: transform 0.15s ease;
+    font-size: 0.85rem;
+}
+
+.wiki-docs-tree-cat-btn[aria-expanded="true"] .wiki-docs-tree-chevron {
+    transform: rotate(90deg);
+}
+
+/* !important is needed because some themes style content links with
+   high-specificity rules that cannot reasonably be out-nested. */
+.wiki-docs-shell .wiki-docs-tree-page a {
+    display: block;
+    padding: 0.3rem 0.5rem;
+    color: var(--bs-secondary-color) !important;
+    text-decoration: none !important;
+    border-radius: var(--bs-border-radius);
+}
+
+.wiki-docs-shell .wiki-docs-tree-page a:hover {
+    background: var(--bs-tertiary-bg);
+    color: var(--bs-body-color) !important;
+}
+
+.wiki-docs-shell .wiki-docs-tree-page.active a {
+    color: var(--bs-primary) !important;
+    font-weight: 600;
+}
+
+/* --- TOC --- */
+
+.wiki-docs-toc-heading {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--bs-secondary-color);
+    margin-bottom: 0.75rem;
+}
+
+.wiki-docs-shell .wiki-docs-toc-list .nav-link {
+    padding: 0.25rem 0 0.25rem 0.75rem;
+    margin-left: -0.75rem;
+    color: var(--bs-secondary-color) !important;
+    font-size: 0.875rem;
+    border-left: 2px solid transparent;
+}
+
+.wiki-docs-shell .wiki-docs-toc-list .nav-link:hover {
+    color: var(--bs-body-color) !important;
+    background: transparent;
+}
+
+.wiki-docs-shell .wiki-docs-toc-list .nav-link.active {
+    color: var(--bs-primary) !important;
+    background: transparent;
+    border-left-color: var(--bs-primary);
+    font-weight: 600;
+}
+
+.wiki-docs-toc-list .wiki-docs-toc-h3 {
+    padding-left: 1.5rem;
+    font-size: 0.825rem;
+}
+
+/* --- Article --- */
+
+/* Prevent wide content from pushing the column past its flex-basis,
+   which would force the right sidebar to wrap below. */
+#wiki-content {
+    min-width: 0;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+.wiki-docs-article {
+    max-width: 760px;
+    min-width: 0;
+}
+
+.wiki-docs-article h2 {
+    margin-top: 2.5rem;
+    padding-top: 0.5rem;
+}
+
+.wiki-docs-article h3 {
+    margin-top: 1.75rem;
+}
+
+#wiki-content h2,
+#wiki-content h3 {
+    scroll-margin-top: calc(var(--wiki-docs-sticky-top, 1rem) + 0.5rem);
+}
+
+.wiki-docs-article img,
+.wiki-docs-article video,
+.wiki-docs-article iframe {
+    max-width: 100%;
+    height: auto;
+}
+
+.wiki-docs-article pre,
+.wiki-docs-article table {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.wiki-docs-article pre code {
+    white-space: pre;
+}
+
+/* --- Prev/Next --- */
+
+.wiki-docs-shell a.wiki-docs-prev-next-card,
+.wiki-docs-shell a.wiki-docs-prev-next-card:hover {
+    color: var(--bs-body-color) !important;
+    text-decoration: none !important;
+    border: 1px solid var(--bs-border-color);
+    background: var(--bs-body-bg);
+    transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.wiki-docs-shell a.wiki-docs-prev-next-card:hover {
+    border-color: var(--bs-primary);
+    transform: translateY(-2px);
+}
+
+/* --- Search trigger button --- */
+
+.wiki-docs-search-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-align: left;
+    color: var(--bs-secondary-color);
+}
+
+.wiki-docs-search-trigger--sidebar {
+    justify-content: flex-start;
+    padding: 0.45rem 0.75rem;
+    font-size: 0.875rem;
+}
+
+.wiki-docs-search-trigger--sidebar .wiki-docs-search-trigger-label {
+    flex: 1 1 auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.wiki-docs-kbd {
+    background: var(--bs-tertiary-bg);
+    border: 1px solid var(--bs-border-color);
+    border-radius: 0.25rem;
+    padding: 0.05rem 0.4rem;
+    font-size: 0.7rem;
+    color: var(--bs-secondary-color);
+    font-family: inherit;
+    flex-shrink: 0;
+}
+
+/* --- Search panel (offcanvas) --- */
+
+.wiki-docs-search-panel {
+    width: 480px;
+    max-width: 100vw;
+}
+
+#wikiSearchModal .offcanvas-header {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--bs-border-color);
+}
+
+.wiki-docs-search-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.wiki-docs-search-icon {
+    color: var(--bs-secondary-color);
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.wiki-docs-search-input {
+    flex: 1 1 auto;
+    border: 0;
+    background: transparent;
+    box-shadow: none !important;
+    padding: 0.4rem 0;
+    font-size: 1rem;
+}
+
+.wiki-docs-search-input:focus {
+    border: 0;
+    outline: none;
+    box-shadow: none !important;
+    background: transparent;
+}
+
+#wikiSearchModal .btn-close {
+    flex-shrink: 0;
+    margin: 0;
+}
+
+#wikiSearchResults .list-group-item-action {
+    color: var(--bs-body-color) !important;
+}
+
+#wikiSearchResults .list-group-item-action.focused {
+    background: var(--bs-tertiary-bg);
+    color: var(--bs-body-color);
+}
+
+#wikiSearchResults mark {
+    background: var(--bs-warning-bg-subtle, rgba(255, 193, 7, 0.25));
+    color: inherit;
+    padding: 0 2px;
+    border-radius: 2px;
+}
+
+/* --- Mobile adjustments --- */
+
+@media (max-width: 991.98px) {
+    .wiki-docs-article {
+        max-width: 100%;
+    }
+}
