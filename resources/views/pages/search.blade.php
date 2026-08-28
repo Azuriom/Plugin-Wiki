@@ -21,7 +21,7 @@
                             {{ $page->category->name }}
                         </span>
 
-                        <p class="card-text">{{ Str::limit(strip_tags($page->content), 300) }}</p>
+                        <p class="card-text">{{ Str::limit(trim(strip_tags(preg_replace('#<style\b[^>]*>.*?</style>#is', '', $page->content))), 300) }}</p>
                     </div>
                 </div>
             @endcan
