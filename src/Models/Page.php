@@ -2,11 +2,11 @@
 
 namespace Azuriom\Plugin\Wiki\Models;
 
-use DOMDocument;
-use DOMXPath;
 use Azuriom\Models\Traits\Attachable;
 use Azuriom\Models\Traits\HasTablePrefix;
 use Azuriom\Models\Traits\Searchable;
+use DOMDocument;
+use DOMXPath;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
@@ -59,7 +59,7 @@ class Page extends Model
     /**
      * Extract a plain text preview from the page HTML content.
      */
-     public function getPreviewTextAttribute(): string
+    public function getPreviewTextAttribute(): string
     {
         return $this->extractPreviewText($this->content, 300);
     }
