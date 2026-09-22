@@ -21,11 +21,7 @@
                             {{ $page->category->name }}
                         </span>
 
-                        @php
-                            $previewContent = preg_replace('#<(style|script)\b[^>]*>.*?</\1>#is', '', $page->content);
-                            $previewText = Str::limit(trim(strip_tags($previewContent)), 300);
-                        @endphp
-                        <p class="card-tespiederxt">{{ $previewText }}</p>
+                        <p class="card-text">{{ $page->preview_text }}</p>
                         
                     </div>
                 </div>

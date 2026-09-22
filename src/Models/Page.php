@@ -2,10 +2,13 @@
 
 namespace Azuriom\Plugin\Wiki\Models;
 
+use DOMDocument;
+use DOMXPath;
 use Azuriom\Models\Traits\Attachable;
 use Azuriom\Models\Traits\HasTablePrefix;
 use Azuriom\Models\Traits\Searchable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 /**
  * @property int $id
@@ -51,5 +54,43 @@ class Page extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    /**
+     * Extract a plain text preview from the page HTML content.
+     */
+     public function getPreviewTextAttribute(): string
+    {
+        return $this->extractPreviewText($this->content, 300);
+    }
+
+    private function extractPreviewText(?string $html, int $limit = 300): string
+    {
+        if ($html === null || trim($html) === '') {
+            return '';
+        }
+
+        $dom = new DOMDocument();
+
+        libxml_use_internal_errors(true);
+        $dom->loadHTML(
+            '<?xml encoding="utf-8" ?><div>'.$html.'</div>',
+            LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD
+        );
+        libxml_clear_errors();
+
+        $xpath = new DOMXPath($dom);
+
+        foreach ($xpath->query('//style | //script') as $node) {
+            if ($node->parentNode !== null) {
+                $node->parentNode->removeChild($node);
+            }
+        }
+
+        $container = $dom->getElementsByTagName('div')->item(0);
+        $text = $container?->textContent ?? $dom->textContent ?? '';
+        $text = trim(preg_replace('/\s+/u', ' ', $text) ?? '');
+
+        return Str::limit($text, $limit);
     }
 }
