@@ -4,6 +4,7 @@ namespace Azuriom\Plugin\Wiki\Models;
 
 use Azuriom\Models\Role;
 use Azuriom\Models\Traits\HasTablePrefix;
+use Azuriom\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
@@ -86,7 +87,7 @@ class Category extends Model
     {
         $ids = $roles === null ? $roles : array_map(fn ($val) => (int) $val, $roles);
 
-        $this->attributes['roles'] = json_encode($ids);
+        $this->attributes['roles'] = $ids === null ? null : json_encode($ids);
     }
 
     /**
@@ -103,5 +104,27 @@ class Category extends Model
     public function scopeParents(Builder $query): void
     {
         $query->whereNull('parent_id')->orderBy('position');
+    }
+
+    /**
+     * Scope a query to only include categories visible to the given user.
+     */
+    public function scopeVisibleTo(Builder $query, ?User $user): void
+    {
+        if ($user !== null && $user->can('wiki.admin')) {
+            return;
+        }
+
+        $roleId = $user?->role_id;
+
+        $query->where('is_enabled', true)
+            ->where(function (Builder $sub) use ($roleId) {
+                // Legacy rows may store "no restriction" as the JSON string 'null'.
+                $sub->whereNull('roles')->orWhere('roles', 'null');
+
+                if ($roleId !== null) {
+                    $sub->orWhereJsonContains('roles', $roleId);
+                }
+            });
     }
 }

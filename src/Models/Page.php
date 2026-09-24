@@ -52,4 +52,23 @@ class Page extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    /**
+     * Get a short plain-text excerpt of the content around the given search
+     * query, with the matches wrapped in a <mark> element.
+     */
+    public function searchExcerpt(string $search): string
+    {
+        $plain = strip_tags($this->content);
+        $position = mb_stripos($plain, $search);
+
+        if ($position === false) {
+            return e(mb_substr($plain, 0, 200));
+        }
+
+        $excerpt = e(mb_substr($plain, max(0, $position - 60), 200));
+        $quoted = preg_quote($search, '/');
+
+        return preg_replace("/({$quoted})/iu", '<mark>$1</mark>', $excerpt);
+    }
 }

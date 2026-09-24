@@ -3,6 +3,7 @@
 use Azuriom\Plugin\Wiki\Controllers\Admin\CategoryController;
 use Azuriom\Plugin\Wiki\Controllers\Admin\PageAttachmentController;
 use Azuriom\Plugin\Wiki\Controllers\Admin\PageController;
+use Azuriom\Plugin\Wiki\Controllers\Admin\SettingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,6 +19,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('can:wiki.admin')->group(function () {
+    Route::get('/settings', [SettingController::class, 'show'])->name('settings');
+    Route::post('/settings', [SettingController::class, 'save'])->name('settings.save');
+
     Route::post('pages/position', [PageController::class, 'updateOrder'])->name('pages.update-order');
     Route::resource('pages', PageController::class)->except('show');
     Route::resource('categories', CategoryController::class)->except(['index', 'show']);
